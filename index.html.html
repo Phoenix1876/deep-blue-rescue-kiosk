@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#061720">
+  <meta name="description" content="Dive into an interactive museum mission about ocean plastic and UN Sustainable Development Goal 14: Life Below Water.">
+  <title>The Deep Blue Rescue | Ocean Learning Lab</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <style>@font-face{font-family:Atkinson;src:url(assets/atkinson.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(assets/atkinson-bold.woff2) format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:Barlow;src:url(assets/barlow-condensed.woff2) format('woff2');font-weight:800;font-display:swap}
+
+:root{color-scheme:dark;--bg:#061720;--panel:#0b222c;--line:#2a4851;--text:#f2fbf9;--muted:#b4cbd0;--mint:#a4f3d8;--gold:#ffd48e;--ink:#09251f;--mono:'Courier New',monospace;--reading:clamp(1.2rem,3vw,2rem)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Atkinson,'Trebuchet MS',sans-serif;color:var(--text);background:radial-gradient(ellipse at 68% 3%,#102f39 0,transparent 53%),var(--bg)}
+button,input,summary{font:inherit}
+button{cursor:pointer;color:inherit}
+button:disabled{cursor:default}
+button:focus-visible,summary:focus-visible,input:focus-visible+span{outline:3px solid var(--gold);outline-offset:4px}
+[hidden]{display:none!important}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+h1,h2,p{margin:0}
+h1,h2{font-family:Barlow,'Arial Narrow',sans-serif;font-weight:800;line-height:.98}
+.shell{width:min(92%,1280px);margin-inline:auto}
+.icon,.utility svg{display:inline-block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.site-header{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand,.utilities,.utility,.sdg-tag{display:flex;align-items:center;gap:.65rem}
+.brand{gap:.78rem;line-height:1.2}
+.brand strong,.brand span{display:block}
+.brand strong{font-size:1.18rem}
+.brand span{color:var(--muted);font-size:.9rem}
+.utilities{justify-content:flex-end;flex-wrap:wrap}
+.utility,.sdg-tag{border:1px solid var(--line);border-radius:8px;padding:.54rem .72rem;min-height:44px;background:#0c232e;font-size:.95rem}
+.utility svg{width:18px;height:18px;color:var(--mint)}
+.utility:hover,.utility[aria-pressed='true']{border-color:var(--mint);background:#153843}
+.sdg-tag strong{color:var(--mint);font:700 .84rem var(--mono);white-space:nowrap}
+.sdg-tag span{color:var(--muted)}
+.progress{padding:0 0 18px}
+.progress ol{list-style:none;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:0;padding:0;border:1px solid var(--line);border-radius:11px;background:#0a222a;overflow:hidden}
+.progress li{min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 5px;color:#adbec5;font-size:1rem;font-weight:700;border-bottom:3px solid transparent;line-height:1.12}
+.progress li[aria-current]{background:#133a40;color:var(--mint);border-color:var(--mint)}
+.progress-number{display:grid;place-items:center;color:#b8c9cd;border:1px solid #44616b;border-radius:5px;font:700 .75rem var(--mono);width:27px;height:25px;flex:none}
+.progress li[aria-current] .progress-number{color:var(--ink);background:var(--mint);border-color:var(--mint)}
+.progress li.done .progress-number{color:var(--mint);border-color:#547f7b}
+.progress-number .icon{width:16px;height:16px}
+.site-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:18px 0;color:var(--muted);font-size:.9rem}
+.site-footer>span:first-child{display:flex;align-items:center;gap:.62rem;font:700 .72rem var(--mono);letter-spacing:.085em;color:#b2cdd1}
+.site-footer i,.eyebrow>span,.field-label i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--mint);flex:none}
+
+.hero{position:relative;isolation:isolate;min-height:clamp(34rem,74vh,44rem);display:flex;flex-direction:column;justify-content:center;overflow:hidden;border:1px solid #3d656c;border-radius:17px;background:#0c3340 url(assets/reef-poster.jpg) center/cover no-repeat}
+.hero-video,.hero-shade,.hero-grid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+.hero-video{object-fit:cover;object-position:center;filter:saturate(1.38) brightness(1.1)}
+.hero-shade{background:linear-gradient(90deg,#051b26 0,rgba(5,24,34,.98) 16%,rgba(5,26,37,.82) 43%,rgba(5,26,37,.25) 71%,rgba(6,27,36,.12) 100%),linear-gradient(0deg,rgba(5,23,33,.94),transparent 29%,transparent 78%,rgba(8,27,35,.56))}
+.hero-grid{background:repeating-linear-gradient(0deg,transparent 0 55px,#c3ffed15 56px 57px),repeating-linear-gradient(90deg,transparent 0 55px,#c3ffed15 56px 57px);mask-image:linear-gradient(90deg,transparent 39%,#111 87%)}
+.hero-main{padding:clamp(1.4rem,5vw,4.4rem) clamp(1.25rem,5.25vw,4.8rem) 5rem;animation:arrive .45s ease-out both}
+.eyebrow{display:flex;align-items:center;gap:.66rem;color:var(--mint);font:700 clamp(.75rem,1.35vw,.92rem) var(--mono);letter-spacing:.13em;text-transform:uppercase}
+.hero-main h1{font-size:clamp(4rem,8.7vw,8.3rem);line-height:.8;letter-spacing:.005em;margin:1.25rem 0;text-shadow:0 2px 24px #061a26aa}
+.hero-main h1 em{color:var(--mint);font-style:normal}
+.hero-intro{font-size:clamp(1.4rem,2.35vw,2rem);line-height:1.26;max-width:27ch;color:#e2eeef;margin-bottom:1.35rem}
+.language{display:flex;gap:.64rem;flex-wrap:wrap;margin-bottom:1rem}
+.language button{display:flex;gap:.52rem;align-items:center;min-height:49px;padding:.45rem .8rem;background:#0c2634;border:1px solid #65848b;border-radius:7px;font-weight:700;font-size:1.15rem}
+.language button span{font:700 .75rem var(--mono);border:1px solid currentColor;border-radius:4px;padding:.18rem .25rem}
+.language button[aria-pressed='true'],.language button:hover{color:var(--mint);border-color:var(--mint);background:#163b3e}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:.78rem;max-width:100%;min-height:54px;padding:.56rem 1.12rem;border:1px solid transparent;border-radius:8px;font-weight:700;font-size:clamp(1.1rem,2.3vw,1.5rem);line-height:1.15;text-align:center;transition:transform .2s}
+.button.primary{background:var(--mint);color:var(--ink)}
+.button.primary:hover:not(:disabled){background:#d4ffef;transform:translateY(-2px)}
+.button.primary:disabled{background:#1b3740;border-color:#36535b;color:#b8ced1}
+.button.secondary{background:#122d36;border-color:#51727c}
+.button.secondary:hover{background:#1b444a}
+.hero-main>.button{min-height:62px;padding:.7rem 1.35rem;animation:signal 2.2s ease-in-out .4s 2}
+.field-label{position:absolute;top:24px;right:24px;display:grid;gap:.33rem;min-width:170px;padding:.73rem .88rem;background:#071f29e8;border-top:1px solid var(--mint);border-bottom:1px solid #86c2bd72;border-radius:2px;color:var(--mint);font:700 .7rem var(--mono);letter-spacing:.11em}
+.field-label span{display:flex;align-items:center;gap:.58rem}
+.field-label strong{color:#f2fbf9;font-size:.79rem}
+.hero-footer{position:absolute;inset:auto 0 0;min-height:57px;padding:.3rem 1.3rem;display:flex;justify-content:space-between;align-items:center;gap:12px;background:#071d29e8;border-top:1px solid #a2f6df40;color:#c6e5e1;font:700 .75rem var(--mono);letter-spacing:.11em}
+.hero-footer>span{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem 1rem}
+.hero-footer b{width:4px;height:4px;background:#94dacc;border-radius:50%}
+.motion-control{display:grid;place-items:center;width:44px;height:44px;flex:none;border:1px solid #577980;border-radius:6px;background:#102e39;color:var(--mint)}
+.motion-control:hover{background:#1b444a}
+.motion-control .icon{width:20px;height:20px}
+
+.stage{min-height:32rem;padding:clamp(1.2rem,3.6vw,3rem);border:1px solid var(--line);border-radius:17px;background:radial-gradient(ellipse at top right,#143741,transparent 60%),var(--panel);animation:arrive .28s ease-out both}
+.stage-heading{display:flex;gap:1rem;align-items:end;justify-content:space-between;margin-bottom:1.45rem}
+.stage-heading h1,.award h1{font-size:clamp(2.9rem,6.5vw,5.25rem);margin:.5rem 0 .65rem;color:var(--text)}
+.stage-intro,.award p,.survey>p,dialog>p{font-size:var(--reading);line-height:1.25;color:var(--muted);max-width:49ch}
+.stage-actions{margin-top:1.25rem;display:flex;align-items:center;gap:1rem;justify-content:space-between}
+.stage-actions p{color:var(--muted);font-size:1.13rem;line-height:1.35;max-width:58ch}
+.stage-actions>.button:last-child:not(.secondary){margin-inline-start:auto;flex-shrink:0}
+.tally,.role-pill{display:inline-flex;align-items:center;gap:.58rem;flex:none;color:var(--mint);border:1px solid #558784;background:#0b2e36;border-radius:8px;padding:.55rem .72rem;font-size:1.1rem;font-weight:700}
+.tally strong{font:700 1.1rem var(--mono);padding:.22rem .4rem;background:var(--mint);color:var(--ink);border-radius:4px}
+.roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.role-card{display:flex;flex-direction:column;align-items:stretch;gap:1rem;text-align:left;padding:clamp(1rem,2.6vw,2rem);border:1px solid #506e78;border-radius:10px;background:linear-gradient(142deg,#153842,#0b2633 77%);transition:transform .18s,border-color .18s}
+.role-card:hover{border-color:var(--mint);transform:translateY(-4px)}
+.role-card:nth-child(2){background:linear-gradient(142deg,#215358,#0c2d39 77%);border-color:#77b8ae}
+.role-card:nth-child(3){background:linear-gradient(142deg,#2c3f55,#142833 77%)}
+.role-top{display:flex;align-items:center;gap:.7rem;justify-content:space-between;flex-wrap:wrap}
+.role-icon,.award-icon{display:grid;place-items:center;width:58px;height:58px;border-radius:8px;border:1px solid #71ab9f;background:#17434a;color:var(--mint)}
+.role-icon svg{width:33px;height:33px}
+.role-card strong,.dive-log h2,.quiz-panel h2,.survey h2,dialog h2{font-family:Barlow,'Arial Narrow',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3rem);line-height:.98}
+.role-description{font-size:clamp(1.25rem,2vw,1.65rem);color:var(--muted);line-height:1.25}
+.role-cta{display:flex;align-items:center;justify-content:space-between;gap:1rem;border-top:1px solid var(--line);padding-top:.8rem;margin-top:auto;color:var(--mint);font-weight:700;font-size:1.3rem}
+.briefing-video{display:block;width:min(100%,870px);height:auto;aspect-ratio:16/9;margin-inline:auto;border:1px solid #62858b;border-radius:9px;background:#081920}
+.transcript{margin:1rem auto 0;width:min(100%,870px);border:1px solid var(--line);border-radius:9px;background:#112d37}
+.transcript summary{padding:.68rem 1rem;cursor:pointer;min-height:50px;font-size:1.3rem;font-weight:700;color:var(--mint)}
+.transcript>div{padding:0 1rem 1rem;color:var(--muted);font-size:var(--reading);line-height:1.3}
+.transcript p{margin:.65rem 0}
+.transcript p:first-child{color:var(--mint)}
+
+.explore-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1fr);gap:1rem}
+.reef-map{position:relative;aspect-ratio:2/1;background:#173440 url(assets/reef-map.svg) center/100% 100%;border:1px solid #527780;border-radius:10px;min-height:240px}
+.marker{position:absolute;transform:translate(-50%,-50%);width:49px;height:49px;display:grid;place-items:center;border:2px solid #0d2c35;border-radius:50%;background:var(--gold);color:#282016;font-size:1.38rem;font-weight:700;box-shadow:0 0 0 3px #ffd48e67;animation:signal 2.2s ease-out .4s 2}
+.marker:nth-child(1){left:22%;top:35%}.marker:nth-child(2){left:75%;top:29%}.marker:nth-child(3){left:42%;top:68%}.marker:nth-child(4){left:83%;top:73%}
+.marker.visited,.marker[aria-pressed='true']{background:var(--mint);box-shadow:0 0 0 3px #a4f3d86b;animation:none}
+.marker:hover{background:#fff7e7}
+.marker span,.clue-item span{display:grid;place-items:center}
+.clue-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.53rem;margin-top:.62rem}
+.clue-item{display:flex;align-items:center;gap:.65rem;min-height:54px;padding:.35rem .58rem;border:1px solid #4a6b75;border-radius:7px;background:#142e38;text-align:left;font-size:clamp(1.05rem,1.8vw,1.25rem);line-height:1.13}
+.clue-item span{width:30px;height:30px;flex:none;border:1px solid #6d7778;border-radius:4px;color:var(--gold);font-weight:700}
+.clue-item.visited span{color:var(--mint);border-color:#578984}
+.clue-item[aria-pressed='true'],.clue-item:hover{border-color:var(--mint);background:#184049}
+.dive-log{padding:clamp(1rem,2.5vw,1.5rem);border:1px solid #557981;border-top:3px solid var(--mint);border-radius:9px;background:#102d37}
+.dive-log h2{margin:.7rem 0}
+.dive-log p:not(.eyebrow){font-size:clamp(1.3rem,2.65vw,2rem);line-height:1.2;color:var(--muted)}
+.dive-log .timeline{margin-top:.85rem;border-top:1px solid var(--line);padding-top:.8rem}
+.timeline strong{color:var(--mint)}
+
+.sorting-board{position:relative;isolation:isolate;overflow:hidden;display:grid;align-items:center;min-height:250px;padding:1rem;border:1px solid #6b8289;border-radius:10px;background:#162f39}
+.sorting-scene{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#0a242c9c,#10232f39),url(assets/reef-life.jpg) center 64%/cover;filter:grayscale(1) brightness(.79);transition:filter .6s}
+.restored .sorting-scene{filter:saturate(1.3) brightness(1.13)}
+.sorting-items,.bins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}
+.debris,.bin{display:flex;align-items:center;gap:.7rem;min-height:65px;text-align:left;font-weight:700;font-size:clamp(1.15rem,2.05vw,1.55rem);line-height:1.1;padding:.6rem .8rem}
+.debris{border:2px solid #c1dcd9;border-radius:8px;background:#e9f6ef;color:#163739;cursor:grab}
+.debris:active{cursor:grabbing}
+.debris[aria-pressed='true'],.debris:not(:disabled):hover{background:#fff0c8;border-color:#b6802c;color:#2d281d}
+.debris:disabled{background:#153438e8;border-style:dashed;border-color:#86b8ab;color:#cbefdf;cursor:default}
+.debris small,.bin small{display:block;font-size:.94rem;font-weight:400;margin-top:.26rem}
+.bins{margin-top:.8rem}
+.bin{min-height:75px;border:1px dashed #87c4bd;border-radius:8px;background:#14363b;color:var(--mint)}
+.bin:hover:not(:disabled),.bin.drop-target{background:#a5f3d9;color:var(--ink);border-style:solid}
+.bin:disabled{color:#b2c8cc;border-color:#628089}
+.feedback{margin:.9rem 0 0;min-height:1.4em;color:var(--muted);font-size:clamp(1.1rem,2vw,1.45rem);line-height:1.25}
+.feedback.success,.feedback.mistake{padding:.55rem .68rem;border-left:3px solid currentColor;background:#102a34;border-radius:4px}.feedback.success{color:var(--mint)}.feedback.mistake{color:var(--gold)}
+
+.quiz-panel,.survey{padding:clamp(1rem,3vw,2rem);border:1px solid #527984;border-radius:11px;background:#102c38}
+.quiz-panel{width:min(100%,880px);margin-inline:auto}
+.quiz-panel.cleared{border-color:var(--mint);background:radial-gradient(ellipse at 100% 0%,#215852,transparent 70%),#102c38;animation:signal .55s ease-out}
+.quiz-panel h2,.survey h2,dialog h2{margin-bottom:.85rem}
+.options{display:grid;gap:.65rem}
+.options button{display:flex;align-items:center;gap:.7rem;text-align:left;min-height:54px;padding:.54rem .72rem;border:1px solid #7da1a7;border-radius:7px;background:#153c45;color:#f2fbf9;font-size:clamp(1.2rem,2.7vw,2rem);font-weight:700;line-height:1.18}
+.options button:hover:not(:disabled){background:#22545b;border-color:var(--mint)}
+.options button.right{border-color:var(--mint);color:var(--mint)}
+.options button.wrong{border-color:var(--gold);color:var(--gold)}
+.option-letter{display:grid;place-items:center;flex:none;width:35px;height:35px;border:1px solid currentColor;border-radius:4px;color:inherit;font:700 1rem var(--mono)}
+.award-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:1.25rem}
+.award{padding:clamp(1rem,3vw,2rem);border:1px solid #609985;border-radius:11px;background:radial-gradient(ellipse at 0% 0%,#1f554d,#0d303a 68%)}
+.award .award-icon{width:80px;height:80px;margin-bottom:1rem}
+.award-icon svg{width:48px;height:48px}
+.award p.eyebrow{font:700 .84rem var(--mono);color:var(--mint)}
+.award .tally{margin-top:1rem}
+.survey fieldset{border:0;padding:0;margin:1.1rem 0;min-width:0}
+.survey legend{font-size:clamp(1.25rem,2.8vw,1.8rem);font-weight:700;padding:0 0 .55rem}
+.survey fieldset div{display:flex;gap:.55rem;flex-wrap:wrap}
+.survey label{position:relative;cursor:pointer}
+.survey input{position:absolute;opacity:0;width:1px;height:1px}
+.survey label span{display:grid;place-items:center;min-width:44px;min-height:45px;border:1px solid #7fa3a8;border-radius:6px;background:#173c47;padding:.45rem .7rem;font-size:1.1rem;font-weight:700}
+.survey input:checked+span{background:var(--mint);color:var(--ink)}
+dialog{background:#102d38;color:var(--text);width:min(92%,580px);border:1px solid #71b2a8;border-radius:12px;padding:1.4rem;max-height:90vh}
+dialog::backdrop{background:#061720d9}
+dialog>.button{margin-top:.65rem}
+
+@keyframes arrive{from{opacity:.55;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes signal{0%,60%,100%{box-shadow:0 0 0 0 #a4f3d800}29%{box-shadow:0 0 0 6px #a4f3d856}}
+@media(min-width:1100px){
+  .hero-intro,.role-description,.dive-log p:not(.eyebrow),.options button,.survey legend{font-size:2rem}
+}
+@media(max-width:800px){
+  .stage-heading{align-items:start;flex-wrap:wrap;gap:.6rem}
+  .progress li{font-size:.82rem}
+  .explore-layout,.award-layout{grid-template-columns:1fr}
+  .stage-actions{flex-wrap:wrap}
+  .field-label{right:15px;top:15px;min-width:0}
+}
+@media(max-width:580px){
+  .shell{width:94%}
+  .site-header{min-height:71px;gap:.38rem}
+  .brand{gap:.44rem}
+  .brand img{width:36px;height:36px}
+  .brand strong{font-size:1rem}
+  .brand span,.sdg-tag{display:none}
+  .utilities{gap:.32rem}
+  .utility{padding:.42rem .5rem;font-size:.8rem;gap:.27rem}
+  .utility svg{width:15px;height:15px}
+  .progress{padding-bottom:11px}
+  .progress ol{gap:0}
+  .progress li{flex-direction:column;gap:4px;font-size:.69rem;text-align:center;padding:6px 2px}
+  .progress-number{width:23px;height:21px}
+  .hero{min-height:36rem}
+  .hero-main{padding:4rem 1.05rem 5rem}
+  .hero-main h1{font-size:clamp(3rem,11.9vw,5rem)}
+  .hero-intro{font-size:1.42rem}
+  .hero-shade{background:linear-gradient(90deg,#061b26ee,#0a263698 82%),linear-gradient(0deg,#071d29,transparent 75%)}
+  .hero-footer{padding:.3rem .75rem;font-size:.61rem;letter-spacing:.065em}
+  .hero-footer>span{gap:.4rem .52rem}
+  .field-label{top:13px;right:13px;padding:.45rem;font-size:.58rem}
+  .field-label strong{font-size:.63rem}
+  .roles{grid-template-columns:1fr}
+  .role-card{gap:.65rem}
+  .sorting-items{grid-template-columns:repeat(2,minmax(0,1fr));gap:.46rem}
+  .sorting-board{padding:.55rem}
+  .debris,.bin{padding:.48rem;gap:.4rem}
+  .bin{flex-direction:column;align-items:flex-start;font-size:1rem}
+  .bins{gap:.42rem}
+  .site-footer>span:last-child{display:none}
+  .reef-map{min-height:200px}
+  .marker{width:44px;height:44px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.stage-intro{background:#fef3c7!important;color:#0b2545!important;border-left:5px solid #d90429!important;padding:12px 16px!important;border-radius:8px!important;font-weight:700!important;margin-top:12px!important;display:inline-block!important;}</style>
+  
+</head>
+<body><div hidden=""><svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7z"></path></symbol>
+  <symbol id="pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"></path></symbol>
+  <symbol id="compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m15 9-2 4-4 2 2-4z"></path></symbol>
+  <symbol id="fish" viewBox="0 0 24 24"><path d="M17 12c-2-3-4-5-7-5s-6 2-8 5c2 3 5 5 8 5s5-2 7-5Zm0 0 5-4v8zM7 11h.1"></path></symbol>
+  <symbol id="scope" viewBox="0 0 24 24"><path d="m14 3 4 3-6 8-4-3zm-5 9-2 3m-4 6h18m-4 0v-3m1-10c6 2 4 10-2 10h-5m-7 0h6"></path></symbol>
+  <symbol id="bottle" viewBox="0 0 24 24"><path d="M10 2h4v4l3 4v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10l3-4zm0 4h4M7 11h10M7 17h10"></path></symbol>
+  <symbol id="can" viewBox="0 0 24 24"><path d="M8 3h8l2 4v11l-2 3H8l-2-3V7zM6 7h12M6 18h12m-7-8h3l-3 5h3"></path></symbol>
+  <symbol id="apple" viewBox="0 0 24 24"><path d="M12 7c-3-3-9-1-9 4s3 10 6 10c2 0 2-1 3-1s1 1 3 1c3 0 6-5 6-10s-6-7-9-4Zm0 0c0-3 2-5 5-5"></path></symbol>
+  <symbol id="peel" viewBox="0 0 24 24"><path d="M19 3c-2 5-6 10-15 10l-2 3c7 6 19 1 19-11zM9 15c4-1 7-3 9-7"></path></symbol>
+  <symbol id="bag" viewBox="0 0 24 24"><path d="M5 7h14l2 14H3zM9 8V5a3 3 0 1 1 6 0v3"></path></symbol>
+  <symbol id="straw" viewBox="0 0 24 24"><path d="m7 21 5-13 7-5 2 3-6 4-5 12zM12 8l3 2"></path></symbol>
+  <symbol id="recycle" viewBox="0 0 24 24"><path d="m9 6 2-3a1 1 0 0 1 2 0l4 7m-4-1 4 1 1-4m1 7 2 4a1 1 0 0 1-1 2h-7m2-3-2 3 2 3m-6-3H4a1 1 0 0 1-1-2l4-7m-4 2 4-2 1 4"></path></symbol>
+  <symbol id="leaf" viewBox="0 0 24 24"><path d="M20 4c1 11-5 16-11 15a6 6 0 0 1-5-5C3 8 9 5 20 4Zm-2 3L4 21"></path></symbol>
+  <symbol id="swap" viewBox="0 0 24 24"><path d="M4 7h15l-3-3m3 3-3 3m4 7H5l3-3m-3 3 3 3"></path></symbol>
+  <symbol id="badge" viewBox="0 0 24 24"><path d="m12 2 3 2 4 1 1 4 2 3-2 3-1 4-4 1-3 2-3-2-4-1-1-4-2-3 2-3 1-4 4-1zM8 12l3 3 5-6"></path></symbol>
+</svg>
+</div>
+  <header class="site-header shell">
+    <div class="brand"><img src="https://6b048ba3b10968d10f41c37d--deep-blue-rescue.netlify.app/assets/mark.svg" alt="" width="44" height="44"><div><strong id="brand">Ocean Learning Lab</strong><span id="brand-sub">Interactive museum exhibit</span></div></div>
+    <div class="utilities">
+      <span class="sdg-tag"><strong id="goal-code">SDG 14</strong><span id="sdg">Life Below Water</span></span>
+      <button class="utility" id="audio" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 9a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12"></path></svg><span id="audio-label">Sound off</span></button>
+      <button class="utility" id="reset" type="button" hidden=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11a9 9 0 1 1 3 7M3 4v7h7"></path></svg><span id="reset-label">Reset</span></button>
+    </div>
+  </header>
+  <nav class="shell progress" aria-label="Mission progress" id="progress"></nav>
+  <main class="shell" id="station"></main>
+  <div id="announcer" class="visually-hidden" role="status"></div>
+  <footer class="shell site-footer"><span><i></i><span id="footer-name">DEEP BLUE RESCUE / LEARNING STATION</span></span><span id="footer-note">An ocean conservation mission · SDG 14</span></footer>
+  <noscript>This interactive exhibit needs JavaScript to run. / Esta exposición interactiva necesita JavaScript.</noscript>
+
+
+<script async="" src="/.netlify/scripts/ar" data-netlify-deploy-id="6b048ba3b10968d10f41c37d" data-netlify-site-id="e3da9d0c-c3da-4dbf-a26d-4945585e0e81" data-agent-runner-id="6b0487b1898bb7a50f90597f"></script>
+<script>const briefing = {
+  en: [
+    ['Dive with me into a living coral reef.', 'These tiny coral animals build a home for fish, crabs, and countless other creatures.', 'Look past the fish. Not everything moving through the water belongs here.'],
+    ['The first source is single-use packaging, like bottles and snack wrappers.', 'Wind and rain can carry litter from streets into streams and out to sea.', 'Plastic can break into smaller pieces instead of disappearing.'],
+    ['The second source is lost or discarded fishing gear.', 'A loose net can keep trapping animals even after nobody is using it.', 'This is called ghost fishing. Tangled gear can also damage living coral.'],
+    ['The third source can be too small to see.', 'Washing clothes made from synthetic fabric can release tiny plastic threads called microfibers.', 'Some of these fibers can travel through wastewater and reach the ocean.'],
+    ['Your mission is to find clues, sort the debris, and stop the next piece from reaching the reef.', 'At home, you can start with a refillable bottle or a bag you can use again.', 'Ready, marine biologist? Meet me at the reef.']
+  ],
+  es: [
+    ['Sumérgete conmigo en un arrecife de coral vivo.', 'Los pequeños animales que forman los corales dan refugio a peces, cangrejos y muchas otras criaturas.', 'Mira más allá de los peces. No todo lo que flota aquí pertenece al arrecife.'],
+    ['La primera fuente son los envases de un solo uso, como botellas y envoltorios.', 'El viento y la lluvia arrastran la basura de las calles a los arroyos y al mar.', 'El plástico puede romperse en trozos pequeños sin desaparecer.'],
+    ['La segunda fuente son los aparejos de pesca perdidos o abandonados.', 'Una red suelta puede atrapar animales aunque nadie la esté usando.', 'Esto se llama pesca fantasma. Los aparejos enredados también dañan el coral vivo.'],
+    ['La tercera fuente puede ser tan pequeña que no se ve.', 'Al lavar ropa sintética se pueden desprender hilos diminutos de plástico llamados microfibras.', 'Algunas fibras pueden viajar por las aguas residuales y llegar al océano.'],
+    ['Tu misión es buscar pistas, clasificar los residuos y evitar que llegue más basura al arrecife.', 'En casa, empieza con una botella rellenable o una bolsa que puedas volver a usar.', '¿Todo listo? Nos vemos en el arrecife.']
+  ]
+};
+const copy = {
+  en: {
+    brand: 'Ocean Learning Lab', brandSub: 'Interactive museum exhibit', sdg: 'Life Below Water', audioOn: 'Sound on', audioOff: 'Sound off', reset: 'Reset',
+    nav: 'Mission progress', steps: ['Welcome', 'Choose Role', 'Briefing', 'Explore Reef', 'Cleanup', 'Debrief'], footer: 'DEEP BLUE RESCUE / LEARNING STATION', footerNote: 'An ocean conservation mission · SDG 14',
+    exhibit: 'SDG 14 / INTERACTIVE OCEAN MISSION', title: ['THE DEEP BLUE', 'RESCUE'], intro: 'Dive into a coral reef under threat. Find what’s polluting it and help bring it back to life.', language: 'Choose your language', start: 'Start mission',
+    field: 'FIELD CAM', live: 'FLOWER GARDEN BANKS', mission: 'MISSION 01', target: 'CORAL REEF', format: '06 STAGES', pause: 'Pause reef motion', play: 'Play reef motion',
+    roleTitle: 'Choose your role', roleIntro: 'Welcome, marine biologist! Choose a role to set the challenge for your dive.', back: 'Back', roleSelect: 'Choose',
+    briefingTitle: 'Mission briefing', briefingMovie: 'Narrated reef briefing with open captions', transcript: 'Read the transcript', transcriptNote: 'Read the lesson below as an alternative to the video.', readDone: 'I’ve read the transcript',
+    briefingLock: 'Finish the video or read the transcript to continue.', movieError: 'The video couldn’t play. Read the transcript to continue.', enter: 'Enter the reef',
+    exploreTitle: 'Explore the reef', exploreIntro: 'Open all four markers to learn what the debris does to wildlife.', explored: 'clues found', map: 'Polluted reef map', marker: 'Explore clue',
+    log: 'DIVE LOG', logStart: 'Look for the debris', logIntro: 'Choose a numbered marker on the map or pick an item from the list.', timeline: 'Time in the ocean', timeNote: 'Degradation varies by material and conditions; these are not countdowns to disappearance.',
+    cleanup: 'Start cleanup game', cleanupTitle: 'Trash coral sorting', cleanupIntro: 'Pick a piece, then pick a destination. You can also drag pieces to the bins.', rules: 'These are the rules for this practice station. Check what your local program accepts.',
+    pieces: 'pieces sorted', sortItems: 'Debris to sort', destinations: 'Sorting destinations', chooseItem: 'Pick a piece of debris first.', selected: 'Selected', sorted: 'Sorted',
+    correctSort: 'Correct!', wrongSort: 'Try again.', restored: 'Reef restored!', restoredNote: 'You cleared all six pieces. Keeping waste out of the water helps protect the reef.',
+    debrief: 'Mission debrief', quizIntro: 'Use what you learned on the dive.', question: 'Question', of: 'of', right: 'Correct!', retry: 'Not quite. Think about the clue and try again.', next: 'Next question', certificate: 'Earn your badge',
+    badge: 'Certified Reef Protector', congrats: 'You completed the rescue mission and answered all three questions correctly.', firstTry: 'Right on the first try', survey: 'Tell us about your visit', surveyNote: 'Two optional questions. Your choices stay on this screen until you reset.',
+    surveys: ['Did you enjoy this station?', 'Will you change a daily habit?'], surveyOptions: ['Yes', 'Not sure', 'No'], exit: 'Exit & reset kiosk',
+    resetTitle: 'Start over?', resetNote: 'This clears your mission progress and survey answers.', cancel: 'Keep exploring', resetConfirm: 'Reset kiosk',
+    bins: ['Recycle', 'Compost', 'Swap for reusable'], binClues: ['Empty bottles and cans', 'Fruit scraps', 'Choose an item you can use again']
+  },
+  es: {
+    brand: 'Laboratorio del Océano', brandSub: 'Exposición interactiva', sdg: 'Vida submarina', audioOn: 'Sonido activado', audioOff: 'Sonido desactivado', reset: 'Reiniciar',
+    nav: 'Progreso de la misión', steps: ['Bienvenida', 'Elige un rol', 'Informe', 'Explora', 'Limpieza', 'Evaluación'], footer: 'RESCATE EN EL AZUL / ESTACIÓN DE APRENDIZAJE', footerNote: 'Una misión de conservación marina · ODS 14',
+    exhibit: 'ODS 14 / MISIÓN OCEÁNICA INTERACTIVA', title: ['RESCATE EN EL', 'AZUL PROFUNDO'], intro: 'Sumérgete en un arrecife amenazado. Descubre qué lo contamina y ayuda a devolverle la vida.', language: 'Elige tu idioma', start: 'Iniciar misión',
+    field: 'CÁMARA SUBMARINA', live: 'FLOWER GARDEN BANKS', mission: 'MISIÓN 01', target: 'ARRECIFE DE CORAL', format: '06 ETAPAS', pause: 'Pausar el movimiento del arrecife', play: 'Reproducir el movimiento del arrecife',
+    roleTitle: 'Elige tu rol', roleIntro: '¡Te damos la bienvenida! Elige un rol para ajustar el desafío de la inmersión.', back: 'Volver', roleSelect: 'Elegir',
+    briefingTitle: 'Informe de misión', briefingMovie: 'Vídeo narrado del arrecife con subtítulos permanentes', transcript: 'Leer la transcripción', transcriptNote: 'Puedes leer la lección en lugar de ver el vídeo.', readDone: 'Ya leí la transcripción',
+    briefingLock: 'Termina el vídeo o lee la transcripción para continuar.', movieError: 'No se pudo reproducir el vídeo. Lee la transcripción para continuar.', enter: 'Entrar al arrecife',
+    exploreTitle: 'Explora el arrecife', exploreIntro: 'Abre los cuatro marcadores para descubrir cómo afectan los residuos a los animales.', explored: 'pistas encontradas', map: 'Mapa del arrecife contaminado', marker: 'Explorar pista',
+    log: 'DIARIO DE INMERSIÓN', logStart: 'Busca los residuos', logIntro: 'Elige un marcador numerado en el mapa o un objeto de la lista.', timeline: 'Tiempo en el océano', timeNote: 'La degradación depende del material y las condiciones. Las cifras no indican cuándo desaparece el plástico.',
+    cleanup: 'Iniciar el juego de limpieza', cleanupTitle: 'Clasifica los residuos', cleanupIntro: 'Elige un residuo y luego un destino. También puedes arrastrar los residuos a los contenedores.', rules: 'Estas son las reglas de la actividad. Consulta qué acepta tu programa local.',
+    pieces: 'residuos clasificados', sortItems: 'Residuos por clasificar', destinations: 'Destinos de clasificación', chooseItem: 'Elige primero un residuo.', selected: 'Elegido', sorted: 'Clasificado',
+    correctSort: '¡Correcto!', wrongSort: 'Inténtalo de nuevo.', restored: '¡Arrecife recuperado!', restoredNote: 'Retiraste los seis residuos. Mantener la basura fuera del agua ayuda a proteger el arrecife.',
+    debrief: 'Evaluación de la misión', quizIntro: 'Pon en práctica lo que aprendiste en la inmersión.', question: 'Pregunta', of: 'de', right: '¡Correcto!', retry: 'Casi. Piensa en la pista y vuelve a intentarlo.', next: 'Siguiente pregunta', certificate: 'Obtén tu insignia',
+    badge: 'Insignia: protege el arrecife', congrats: 'Completaste el rescate y respondiste las tres preguntas correctamente.', firstTry: 'Aciertos al primer intento', survey: 'Cuéntanos sobre tu visita', surveyNote: 'Dos preguntas opcionales. Tus respuestas permanecen en esta pantalla hasta que reinicies.',
+    surveys: ['¿Disfrutaste la actividad?', '¿Cambiarás algún hábito diario?'], surveyOptions: ['Sí', 'No lo sé', 'No'], exit: 'Salir y reiniciar',
+    resetTitle: '¿Volver al inicio?', resetNote: 'Se borrará el progreso de la misión y las respuestas de la encuesta.', cancel: 'Seguir explorando', resetConfirm: 'Reiniciar estación',
+    bins: ['Reciclar', 'Compostar', 'Elegir un reutilizable'], binClues: ['Botellas y latas vacías', 'Restos de fruta', 'Elige un objeto que puedas volver a usar']
+  }
+};
+const roles = {
+  en: [
+    ['Junior Explorer', 'BEGINNER', 'Spot the clues with simple words and visual hints.', 'Dive focus: spot the litter and find something you can use again.'],
+    ['Reef Ranger', 'INTERMEDIATE', 'Trace how plastic reaches the reef and sort everyday waste.', 'Dive focus: connect each source of plastic to a way to prevent it.'],
+    ['Ocean Specialist', 'PRO', 'Investigate microplastics and apply stricter sorting rules.', 'Dive focus: distinguish fragmentation from decomposition. In the game, pause to decide how to prepare a bottle for recycling.']
+  ],
+  es: [
+    ['Explorador juvenil', 'INICIAL', 'Encuentra las pistas con palabras sencillas y ayudas visuales.', 'Enfoque: encuentra la basura y descubre qué puedes volver a usar.'],
+    ['Guardián del arrecife', 'INTERMEDIO', 'Descubre cómo llega el plástico al arrecife y clasifica residuos cotidianos.', 'Enfoque: relaciona cada fuente de plástico con una forma de prevenirla.'],
+    ['Especialista marino', 'AVANZADO', 'Investiga los microplásticos y aplica reglas de clasificación más exigentes.', 'Enfoque: distingue la fragmentación de la descomposición. En el juego, decide cómo preparar una botella para reciclarla.']
+  ]
+};
+const clues = {
+  en: [
+    ['Plastic water bottle', 'About 450 years in educational estimates.', ['A bottle can break into tiny bits that animals may swallow.', 'A bottle fragments into microplastics that wildlife can swallow.', 'Fragmentation makes the particles smaller; it does not mean the polymer has biodegraded.']],
+    ['Ghost fishing net', 'No single estimate; lost gear can trap animals for years.', ['A lost net can trap fish and turtles.', 'A discarded net keeps catching animals without a fisher. That is ghost fishing.', 'Lost gear can continue ghost fishing, entangle wildlife, and abrade living coral.']],
+    ['Chip bag', 'No single estimate; layers of plastic can persist as fragments.', ['A sea animal might mistake pieces of the wrapper for food.', 'Flexible wrappers can break up and be mistaken for food.', 'Multilayer packaging does not have one reliable breakdown timeline; fragments can be ingested by wildlife.']],
+    ['Six-pack ring', 'About 400 years for a conventional plastic ring in educational estimates.', ['A turtle or bird can get stuck in the loops.', 'The loops can trap wildlife and restrict movement as animals grow.', 'Conventional plastic rings can entangle wildlife even before the material fragments.']]
+  ],
+  es: [
+    ['Botella de plástico', 'Unos 450 años, según estimaciones educativas.', ['Una botella puede romperse en trocitos que los animales se pueden tragar.', 'Una botella se fragmenta en microplásticos que los animales pueden tragar.', 'La fragmentación reduce el tamaño de las partículas; no implica que el polímero se biodegrade.']],
+    ['Red de pesca fantasma', 'No hay una estimación única. Una red perdida puede atrapar animales durante años.', ['Una red perdida puede atrapar peces y tortugas.', 'Una red abandonada sigue atrapando animales. Eso se llama pesca fantasma.', 'Los aparejos perdidos pueden seguir practicando pesca fantasma, atrapar fauna y desgastar el coral vivo.']],
+    ['Bolsa de papas fritas', 'No hay una estimación única. Las capas plásticas pueden persistir como fragmentos.', ['Un animal marino puede confundir los trocitos con comida.', 'Los envoltorios flexibles se fragmentan y se pueden confundir con alimento.', 'Los envases multicapa no tienen un plazo único de degradación. La fauna puede ingerir los fragmentos.']],
+    ['Anillas de seis latas', 'Unos 400 años para las anillas convencionales, según estimaciones educativas.', ['Una tortuga o un ave puede quedarse atrapada en las anillas.', 'Las anillas pueden atrapar animales y limitar su movimiento al crecer.', 'Las anillas convencionales pueden atrapar fauna antes de que el plástico se fragmente.']]
+  ]
+};
+const debris = {
+  en: [
+    ['Plastic water bottle', 'Empty it and put it with accepted containers. Choose a refillable bottle next time.'],
+    ['Aluminum drink can', 'Empty aluminum drink cans belong with accepted recyclable containers.'],
+    ['Apple core', 'It is a fruit scrap. Put it with the organics, not the containers.'],
+    ['Banana peel', 'The peel breaks down with other fruit scraps in a compost system.'],
+    ['Plastic shopping bag', 'Plastic bags can tangle sorting machinery. Choose a reusable tote instead.'],
+    ['Single-use straw', 'Small straws are hard for many facilities to sort. Skip it or choose a washable one.']
+  ],
+  es: [
+    ['Botella de plástico', 'Vacíala y colócala con los envases aceptados. La próxima vez, elige una botella rellenable.'],
+    ['Lata de aluminio', 'Las latas de aluminio vacías van con los envases reciclables aceptados.'],
+    ['Corazón de manzana', 'Es un resto de fruta. Colócalo con los residuos orgánicos, no con los envases.'],
+    ['Cáscara de plátano', 'La cáscara se descompone con otros restos de fruta en el compost.'],
+    ['Bolsa de plástico', 'Las bolsas pueden atascar la maquinaria. Elige una bolsa reutilizable.'],
+    ['Pajita de un solo uso', 'Muchas plantas no pueden separar objetos tan pequeños. Evítala o elige una lavable.']
+  ]
+};
+const preparation = {
+  en: ['Before this bottle goes into recycling, what should you do?', ['Leave the drink inside', 'Empty the bottle', 'Put it inside a plastic bag'], 'Empty the bottle before putting it with accepted recyclable containers.'],
+  es: ['Antes de reciclar esta botella, ¿qué debes hacer?', ['Dejar la bebida dentro', 'Vaciar la botella', 'Meterla dentro de una bolsa de plástico'], 'Vacía la botella antes de colocarla con los envases reciclables aceptados.']
+};
+const quizzes = {
+  en: [
+    [
+      ['Which piece of litter can blow off a street and wash into the sea?', ['A fish', 'A snack wrapper', 'A living coral'], 1, 'Wind and rain can carry wrappers from streets to the ocean.'],
+      ['What can a lost fishing net do?', ['Turn into fish food', 'Help coral grow', 'Trap fish and turtles'], 2, 'A lost net can keep catching animals even when nobody uses it.'],
+      ['What can replace a throwaway water bottle?', ['A bottle you refill', 'Two throwaway bottles', 'A plastic straw'], 0, 'Refilling the same bottle avoids more throwaway packaging.']
+    ],
+    [
+      ['Which set matches the three plastic sources from the briefing?', ['Shells, seaweed, and sand', 'Paper, rain, and fish', 'Single-use packaging, lost fishing gear, and synthetic microfibers'], 2, 'The briefing follows packaging, lost fishing gear, and fibers from synthetic fabrics.'],
+      ['What happens when a lost fishing net keeps trapping animals?', ['Ghost fishing', 'Reef restoration', 'Composting'], 0, 'Ghost fishing continues without anyone using the gear.'],
+      ['Which swap helps prevent new plastic waste?', ['Buy thinner plastic bags', 'Bring a reusable tote', 'Put disposable bags in compost'], 1, 'A reusable tote replaces many single-use bags.']
+    ],
+    [
+      ['Which pathway can deliver synthetic microfibers to the sea?', ['Coral produces them to catch food', 'Washing synthetic clothes releases fibers into wastewater', 'Aluminum cans corrode into plastic fibers'], 1, 'Fibers shed during washing can reach the ocean through wastewater.'],
+      ['Why can fragmented plastic still harm wildlife?', ['Fragmentation makes the plastic edible', 'Fragmentation immediately biodegrades the plastic', 'Small plastic particles can still be ingested'], 2, 'Fragmentation changes particle size but does not make plastic disappear.'],
+      ['Which action prevents waste at its source?', ['Refill a durable bottle instead of buying disposable bottles', 'Wait for bottles in the ocean to fragment', 'Rinse a disposable bottle after every purchase'], 0, 'Using the same durable container avoids generating more waste.']
+    ]
+  ],
+  es: [
+    [
+      ['¿Qué residuo puede volar desde la calle y llegar al mar?', ['Un pez', 'Un envoltorio', 'Un coral vivo'], 1, 'El viento y la lluvia pueden llevar envoltorios desde las calles hasta el océano.'],
+      ['¿Qué puede hacer una red de pesca perdida?', ['Convertirse en comida para peces', 'Ayudar a crecer al coral', 'Atrapar peces y tortugas'], 2, 'Una red perdida puede seguir atrapando animales aunque nadie la use.'],
+      ['¿Qué puede reemplazar una botella desechable?', ['Una botella rellenable', 'Dos botellas desechables', 'Una pajita de plástico'], 0, 'Rellenar la misma botella evita generar más envases desechables.']
+    ],
+    [
+      ['¿Cuáles son las tres fuentes de plástico del informe?', ['Conchas, algas y arena', 'Papel, lluvia y peces', 'Envases de un solo uso, aparejos perdidos y microfibras sintéticas'], 2, 'El informe trata de envases, aparejos de pesca perdidos y fibras de tejidos sintéticos.'],
+      ['¿Cómo se llama cuando una red perdida sigue atrapando animales?', ['Pesca fantasma', 'Recuperación del arrecife', 'Compostaje'], 0, 'La pesca fantasma continúa sin que nadie use los aparejos.'],
+      ['¿Qué cambio evita generar nuevos residuos plásticos?', ['Comprar bolsas más finas', 'Llevar una bolsa reutilizable', 'Compostar bolsas desechables'], 1, 'Una bolsa reutilizable reemplaza muchas bolsas de un solo uso.']
+    ],
+    [
+      ['¿Cómo pueden llegar al mar las microfibras sintéticas?', ['El coral las produce para conseguir alimento', 'El lavado de ropa sintética suelta fibras en las aguas residuales', 'Las latas de aluminio se convierten en fibras plásticas'], 1, 'Las fibras que se desprenden en el lavado pueden llegar al océano por las aguas residuales.'],
+      ['¿Por qué puede dañar a los animales el plástico fragmentado?', ['La fragmentación hace comestible el plástico', 'La fragmentación biodegrada el plástico de inmediato', 'Los animales aún pueden ingerir partículas pequeñas de plástico'], 2, 'La fragmentación reduce el tamaño de las partículas, pero no hace desaparecer el plástico.'],
+      ['¿Qué acción evita generar residuos desde el principio?', ['Rellenar una botella duradera en vez de comprar botellas desechables', 'Esperar a que las botellas del mar se fragmenten', 'Enjuagar una botella desechable por cada compra'], 0, 'Usar el mismo envase duradero evita generar más residuos.']
+    ]
+  ]
+};
+
+
+
+const station = document.querySelector('#station');
+const progress = document.querySelector('#progress');
+const announcer = document.querySelector('#announcer');
+const soundButton = document.querySelector('#audio');
+const resetButton = document.querySelector('#reset');
+const motion = matchMedia('(prefers-reduced-motion: reduce)');
+const ambience = new Audio('https://6b048ba3b10968d10f41c37d--deep-blue-rescue.netlify.app/assets/reef-ambience.m4a');
+ambience.loop = true;
+ambience.volume = 0.26;
+
+const itemIcons = ['bottle', 'can', 'apple', 'peel', 'bag', 'straw'];
+const answers = [0, 0, 1, 1, 2, 2];
+const itemOrder = [4, 1, 2, 0, 5, 3];
+const binIcons = ['recycle', 'leaf', 'swap'];
+const roleIcons = ['compass', 'fish', 'scope'];
+const newSession = () => ({ step: 0, locale: 'en', sound: false, motionPaused: motion.matches, role: 1, briefingDone: false, opened: new Set(), activeClue: null, selected: null, sorted: new Set(), bottlePrepared: false, question: 0, tried: new Set(), passed: false, firstTry: 0, complete: false, survey: [null, null], sortMessage: '', sortStatus: '' });
+let state = newSession();
+let audioContext;
+
+const text = () => copy[state.locale];
+const role = () => roles[state.locale][state.role];
+const quiz = () => quizzes[state.locale][state.role][state.question];
+const icon = name => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#${name}"/></svg>`;
+const number = index => String(index + 1).padStart(2, '0');
+const escape = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+const action = (label, name, options = {}) => `<button type="button" class="button ${options.secondary ? 'secondary' : 'primary'}" data-action="${name}" ${options.disabled ? 'disabled' : ''}>${label}${options.secondary ? '' : icon('arrow')}</button>`;
+const heading = (title, intro, badge = '') => `<header class="stage-heading"><div><p class="eyebrow"><span></span>${number(state.step)} / ${text().steps[state.step]}</p><h1 tabindex="-1">${title}</h1>${intro ? `<p class="stage-intro">${intro}</p>` : ''}</div>${badge}</header>`;
+const tally = (count, total, label) => `<span class="tally"><strong>${count}/${total}</strong> ${label}</span>`;
+
+function updateChrome() {
+  const words = text();
+  document.documentElement.lang = state.locale;
+  document.title = `${words.title.join(' ')} | ${words.brand}`;
+  for (const [id, value] of Object.entries({ brand: words.brand, 'brand-sub': words.brandSub, 'goal-code': state.locale === 'es' ? 'ODS 14' : 'SDG 14', sdg: words.sdg, 'audio-label': state.sound ? words.audioOn : words.audioOff, 'reset-label': words.reset, 'footer-name': words.footer, 'footer-note': words.footerNote })) {
+    document.getElementById(id).textContent = value;
+  }
+  soundButton.setAttribute('aria-pressed', state.sound);
+  resetButton.hidden = state.step === 0;
+  progress.setAttribute('aria-label', words.nav);
+  progress.innerHTML = `<ol>${words.steps.map((step, index) => `<li class="${index < state.step ? 'done' : ''}" ${index === state.step ? 'aria-current="step"' : ''}><span class="progress-number">${index < state.step ? icon('check') : number(index)}</span><span>${step}</span></li>`).join('')}</ol>`;
+}
+
+function welcome() {
+  const words = text();
+  return `<section class="hero" aria-labelledby="hero-title">
+    <video class="hero-video" src="https://6b048ba3b10968d10f41c37d--deep-blue-rescue.netlify.app/assets/reef-loop.mp4" poster="https://6b048ba3b10968d10f41c37d--deep-blue-rescue.netlify.app/assets/reef-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+    <div class="hero-shade"></div><div class="hero-grid"></div>
+    <div class="hero-main"><p class="eyebrow"><span></span>${words.exhibit}</p><h1 id="hero-title" tabindex="-1">${words.title[0]}<br><em>${words.title[1]}</em></h1>
+      <p class="hero-intro">${words.intro}</p>
+      <div class="language" role="group" aria-label="${words.language}"><button type="button" lang="en" data-language="en" aria-pressed="${state.locale === 'en'}"><span>EN</span> English</button><button type="button" lang="es" data-language="es" aria-pressed="${state.locale === 'es'}"><span>ES</span> Español</button></div>
+      ${action(words.start, 'start')}
+    </div>
+    <div class="field-label" aria-hidden="true"><span><i></i>${words.field} / 01</span><strong>${words.live}</strong></div>
+    <div class="hero-footer"><span>${words.mission}<b></b>${words.target}<b></b>${words.format}</span><button type="button" class="motion-control" data-action="motion" aria-label="${words.pause}">${icon('pause')}</button></div>
+  </section>`;
+}
+
+function roleSelection() {
+  const words = text();
+  return `<section class="stage">${heading(words.roleTitle, words.roleIntro)}<div class="roles">${roles[state.locale].map(([name, level, description], index) =>
+    `<button type="button" class="role-card" data-role="${index}"><span class="role-top"><span class="role-icon">${icon(roleIcons[index])}</span><span class="eyebrow">${level}</span></span><strong>${name}</strong><span class="role-description">${description}</span><span class="role-cta">${words.roleSelect} ${icon('arrow')}</span></button>`).join('')}</div><div class="stage-actions">${action(words.back, 'welcome', { secondary: true })}</div></section>`;
+}
+
+function movie() {
+  const words = text();
+  return `<section class="stage">${heading(words.briefingTitle, role()[3], `<span class="role-pill">${icon(roleIcons[state.role])}${role()[0]}</span>`)}
+    <video class="briefing-video" controls playsinline preload="metadata" poster="https://6b048ba3b10968d10f41c37d--deep-blue-rescue.netlify.app/assets/reef-poster.jpg" src="https://6b048ba3b10968d10f41c37d--deep-blue-rescue.netlify.app/assets/briefing-${state.locale}.mp4" aria-label="${words.briefingMovie}"></video>
+    <details class="transcript"><summary>${words.transcript}</summary><div><p>${words.transcriptNote}</p>${briefing[state.locale].map(lines => `<p>${lines.join(' ')}</p>`).join('')}${action(words.readDone, 'read')}</div></details>
+    <div class="stage-actions"><p id="briefing-status" role="status">${state.briefingDone ? '' : words.briefingLock}</p>${action(words.enter, 'enter', { disabled: !state.briefingDone })}</div>
+  </section>`;
+}
+
+function reef() {
+  const words = text();
+  const active = state.activeClue;
+  const data = clues[state.locale];
+  const clue = active === null ? null : data[active];
+  const buttons = kind => data.map(([name], index) => `<button type="button" class="${kind} ${state.opened.has(index) ? 'visited' : ''}" data-clue="${index}" aria-pressed="${active === index}" aria-controls="dive-log" aria-label="${words.marker} ${index + 1}: ${escape(name)}${state.opened.has(index) ? ` (${words.explored})` : ''}"><span>${state.opened.has(index) ? icon('check') : index + 1}</span>${kind === 'clue-item' ? name : ''}</button>`).join('');
+  return `<section class="stage">${heading(words.exploreTitle, words.exploreIntro, tally(state.opened.size, 4, words.explored))}
+    <div class="explore-layout"><div><div class="reef-map" role="group" aria-label="${words.map}">${buttons('marker')}</div><div class="clue-list">${buttons('clue-item')}</div></div>
+    <article class="dive-log" id="dive-log" aria-live="polite" aria-atomic="true"><p class="eyebrow"><span></span>${words.log}${clue ? ` / ${number(active)}` : ''}</p><h2>${clue ? clue[0] : words.logStart}</h2>${clue ? `<p>${clue[2][state.role]}</p><p class="timeline"><strong>${words.timeline}:</strong> ${clue[1]}</p>` : `<p>${words.logIntro}</p>`}</article></div>
+    <div class="stage-actions"><p>${words.timeNote}</p>${action(words.cleanup, 'cleanup', { disabled: state.opened.size !== 4 })}</div>
+  </section>`;
+}
+
+function cleanup() {
+  const words = text();
+  const [prompt, options] = preparation[state.locale];
+  return `<section class="stage">${heading(words.cleanupTitle, words.cleanupIntro, tally(state.sorted.size, 6, words.pieces))}
+    <div class="sorting-board ${state.sorted.size === 6 ? 'restored' : ''}"><div class="sorting-scene"></div>
+      <div class="sorting-items" role="group" aria-label="${words.sortItems}">${itemOrder.map(index => {
+        const name = debris[state.locale][index][0];
+        const sorted = state.sorted.has(index);
+        return `<button type="button" class="debris" data-item="${index}" aria-pressed="${state.selected === index}" draggable="${!sorted}" ${sorted ? 'disabled' : ''}>${icon(sorted ? 'check' : itemIcons[index])}<span>${name}${sorted ? `<small>${words.sorted}</small>` : ''}</span></button>`;
+      }).join('')}</div>
+    </div>
+    <div class="bins" role="group" aria-label="${words.destinations}">${words.bins.map((label, index) => `<button type="button" class="bin" data-bin="${index}" ${state.sorted.size === 6 ? 'disabled' : ''}>${icon(binIcons[index])}<span>${label}${state.role === 0 ? `<small>${words.binClues[index]}</small>` : ''}</span></button>`).join('')}</div>
+    <p id="sort-feedback" class="feedback ${state.sortStatus}" role="status">${state.sortMessage}</p>
+    <div class="stage-actions"><p>${words.rules}</p>${action(words.debrief, 'debrief', { disabled: state.sorted.size !== 6 })}</div>
+    <dialog id="bottle-dialog" aria-labelledby="bottle-heading"><h2 id="bottle-heading">${prompt}</h2><div class="options">${options.map((option, index) => `<button type="button" data-prepare="${index}">${option}</button>`).join('')}</div><p class="feedback" id="prep-feedback" role="status"></p>${action(words.back, 'close-bottle', { secondary: true })}</dialog>
+  </section>`;
+}
+
+function debrief() {
+  const words = text();
+  const [prompt, options, correct] = quiz();
+  return `<section class="stage">${heading(words.debrief, words.quizIntro, tally(state.question + 1, 3, words.question))}
+    <article class="quiz-panel"><h2 id="question" tabindex="-1">${prompt}</h2><div class="options" aria-labelledby="question" role="group">${options.map((option, index) => `<button type="button" data-answer="${index}" ${state.passed || state.tried.has(index) ? 'disabled' : ''}><span class="option-letter">${state.passed && index === correct ? icon('check') : String.fromCharCode(65 + index)}</span>${option}</button>`).join('')}</div><p class="feedback" id="quiz-feedback" role="status"></p></article>
+    <div class="stage-actions end">${action(state.question === 2 ? words.certificate : words.next, 'next', { disabled: !state.passed })}</div>
+  </section>`;
+}
+
+function award() {
+  const words = text();
+  return `<section class="stage"><div class="award-layout"><header class="award"><span class="award-icon">${icon('badge')}</span><p class="eyebrow"><span></span>${words.debrief}</p><h1 tabindex="-1">${words.badge}</h1><p>${words.congrats}</p>${tally(state.firstTry, 3, words.firstTry)}</header>
+    <article class="survey"><h2>${words.survey}</h2><p>${words.surveyNote}</p>${words.surveys.map((question, index) => `<fieldset><legend>${question}</legend><div>${words.surveyOptions.map((answer, option) => `<label><input type="radio" name="survey-${index}" value="${option}" data-survey="${index}" ${state.survey[index] === option ? 'checked' : ''}><span>${answer}</span></label>`).join('')}</div></fieldset>`).join('')}${action(words.exit, 'restart')}</article></div></section>`;
+}
+
+function speak(message) {
+  if (!state.sound || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const voice = new SpeechSynthesisUtterance(message);
+  voice.lang = state.locale === 'es' ? 'es-ES' : 'en-US';
+  window.speechSynthesis.speak(voice);
+}
+
+function cue(success) {
+  if (!state.sound || !window.AudioContext) return;
+  audioContext ??= new AudioContext();
+  audioContext.resume().catch(() => {});
+  const tone = audioContext.createOscillator();
+  const volume = audioContext.createGain();
+  const time = audioContext.currentTime;
+  tone.type = 'sine';
+  tone.frequency.setValueAtTime(success ? 523 : 220, time);
+  tone.frequency.setValueAtTime(success ? 784 : 175, time + 0.09);
+  volume.gain.setValueAtTime(0.07, time);
+  volume.gain.exponentialRampToValueAtTime(0.001, time + 0.27);
+  tone.connect(volume).connect(audioContext.destination);
+  tone.start(time);
+  tone.stop(time + 0.28);
+}
+
+function syncMedia() {
+  const heroVideo = station.querySelector('.hero-video');
+  if (heroVideo) {
+    const button = station.querySelector('[data-action="motion"]');
+    const paused = state.motionPaused;
+    button.setAttribute('aria-label', paused ? text().play : text().pause);
+    button.innerHTML = icon(paused ? 'play' : 'pause');
+    if (paused) heroVideo.pause();
+    else heroVideo.play().catch(() => {
+      if (heroVideo.isConnected && !state.motionPaused) {
+        state.motionPaused = true;
+        syncMedia();
+      }
+    });
+  }
+  if (state.step === 0 && state.sound) ambience.play().catch(() => {});
+  else {
+    ambience.pause();
+    ambience.currentTime = 0;
+  }
+}
+
+function finishBriefing() {
+  state.briefingDone = true;
+  station.querySelector('[data-action="enter"]').disabled = false;
+  station.querySelector('#briefing-status').textContent = '';
+}
+
+function render(focus, chrome = true) {
+  if (chrome) updateChrome();
+  const screens = [welcome, roleSelection, movie, reef, cleanup, state.complete ? award : debrief];
+  station.querySelectorAll('video').forEach(video => video.pause());
+  station.innerHTML = screens[state.step]();
+  syncMedia();
+  if (state.step === 2) {
+    const player = station.querySelector('video');
+    player.muted = !state.sound;
+    player.addEventListener('ended', finishBriefing, { once: true });
+    player.addEventListener('error', () => {
+      if (player.isConnected) station.querySelector('#briefing-status').textContent = text().movieError;
+    }, { once: true });
+    if (!motion.matches) player.play().catch(() => {});
+  }
+  if (focus) station.querySelector(focus)?.focus({ preventScroll: true });
+}
+
+function go(step) {
+  window.speechSynthesis?.cancel();
+  announcer.textContent = '';
+  state.step = step;
+  render('h1');
+  window.scrollTo(0, 0);
+  if (step === 1) speak(text().roleIntro);
+  if (step === 5) speak(quiz()[0]);
+}
+
+function restart() {
+  state = newSession();
+  go(0);
+}
+
+function sort(index, bin) {
+  const words = text();
+  const feedback = station.querySelector('#sort-feedback');
+  if (index === null) {
+    feedback.textContent = words.chooseItem;
+    return;
+  }
+  if (!Number.isInteger(index) || index < 0 || index >= answers.length || state.sorted.has(index)) return;
+  if (answers[index] !== bin) {
+    state.selected = index;
+    updateSelection();
+    state.sortStatus = 'mistake';
+    state.sortMessage = `${words.wrongSort} ${debris[state.locale][index][1]}`;
+    feedback.className = 'feedback mistake';
+    feedback.textContent = state.sortMessage;
+    cue(false);
+    speak(state.sortMessage);
+    return;
+  }
+  if (state.role === 2 && index === 0 && !state.bottlePrepared) {
+    state.selected = index;
+    updateSelection();
+    station.querySelector('#bottle-dialog').showModal();
+    speak(preparation[state.locale][0]);
+    return;
+  }
+  state.sorted.add(index);
+  state.selected = null;
+  state.sortStatus = 'success';
+  const finished = state.sorted.size === 6;
+  state.sortMessage = finished ? `${words.restored} ${words.restoredNote}` : `${words.correctSort} ${debris[state.locale][index][1]}`;
+  const nextItem = itemOrder.find(item => !state.sorted.has(item));
+  render(finished ? '[data-action="debrief"]' : `[data-item="${nextItem}"]`, false);
+  announcer.textContent = state.sortMessage;
+  station.querySelector('[data-item]:focus, [data-action="debrief"]:focus')?.scrollIntoView({ block: 'nearest' });
+  cue(true);
+  speak(state.sortMessage);
+}
+
+function updateSelection() {
+  station.querySelectorAll('[data-item]').forEach(button => button.setAttribute('aria-pressed', Number(button.dataset.item) === state.selected));
+}
+
+function checkAnswer(index) {
+  if (state.passed || state.tried.has(index)) return;
+  const words = text();
+  const [, , correct, reason] = quiz();
+  const right = index === correct;
+  if (right && !state.tried.size) state.firstTry += 1;
+  state.tried.add(index);
+  state.passed = right;
+  if (right) station.querySelector('.quiz-panel').classList.add('cleared');
+  const options = [...station.querySelectorAll('[data-answer]')];
+  options[index].classList.add(right ? 'right' : 'wrong');
+  options[index].querySelector('.option-letter').innerHTML = right ? icon('check') : '×';
+  options.forEach((button, option) => { button.disabled = right || state.tried.has(option); });
+  const feedback = station.querySelector('#quiz-feedback');
+  feedback.className = `feedback ${right ? 'success' : 'mistake'}`;
+  feedback.textContent = `${right ? words.right : words.retry} ${reason}`;
+  const next = station.querySelector('[data-action="next"]');
+  next.disabled = !right;
+  (right ? next : options.find(button => !button.disabled))?.focus();
+  cue(right);
+  speak(feedback.textContent);
+}
+
+station.addEventListener('click', event => {
+  const button = event.target.closest('button');
+  if (!button || button.disabled) return;
+  const data = button.dataset;
+  if (data.language) {
+    if (state.locale === data.language) return;
+    state.locale = data.language;
+    render(`[data-language="${data.language}"]`);
+  } else if (data.role !== undefined) {
+    state.role = Number(data.role);
+    go(2);
+  } else if (data.clue !== undefined) {
+    const index = Number(data.clue);
+    const [name, timeline, impact] = clues[state.locale][index];
+    state.opened.add(index);
+    state.activeClue = index;
+    const updated = document.createElement('template');
+    updated.innerHTML = reef();
+    for (const selector of ['.tally', '.dive-log', '.stage-actions']) {
+      station.querySelector(selector).innerHTML = updated.content.querySelector(selector).innerHTML;
+    }
+    station.querySelectorAll('[data-clue]').forEach((marker, order) => {
+      const next = updated.content.querySelectorAll('[data-clue]')[order];
+      marker.className = next.className;
+      marker.setAttribute('aria-pressed', next.getAttribute('aria-pressed'));
+      marker.setAttribute('aria-label', next.getAttribute('aria-label'));
+      marker.innerHTML = next.innerHTML;
+    });
+    speak(`${name}. ${timeline} ${impact[state.role]}`);
+  } else if (data.item !== undefined) {
+    const index = Number(data.item);
+    state.selected = state.selected === index ? null : index;
+    updateSelection();
+    state.sortMessage = state.selected === null ? text().chooseItem : `${text().selected}: ${debris[state.locale][index][0]}`;
+    const feedback = station.querySelector('#sort-feedback');
+    feedback.className = 'feedback';
+    feedback.textContent = state.sortMessage;
+  } else if (data.bin !== undefined) {
+    sort(state.selected, Number(data.bin));
+  } else if (data.prepare !== undefined) {
+    if (Number(data.prepare) === 1) {
+      state.bottlePrepared = true;
+      station.querySelector('#bottle-dialog').close();
+      sort(0, 0);
+    } else {
+      station.querySelector('#prep-feedback').textContent = `${text().wrongSort} ${preparation[state.locale][2]}`;
+      cue(false);
+      speak(preparation[state.locale][2]);
+    }
+  } else if (data.answer !== undefined) {
+    checkAnswer(Number(data.answer));
+  } else {
+    switch (data.action) {
+      case 'motion': state.motionPaused = !state.motionPaused; syncMedia(); break;
+      case 'welcome': go(0); break;
+      case 'start': go(1); break;
+      case 'read': finishBriefing(); station.querySelector('[data-action="enter"]').focus(); break;
+      case 'enter': if (state.briefingDone) go(3); break;
+      case 'cleanup': if (state.opened.size === 4) go(4); break;
+      case 'close-bottle': station.querySelector('#bottle-dialog').close(); break;
+      case 'debrief': if (state.sorted.size === 6) go(5); break;
+      case 'next':
+        if (!state.passed) break;
+        if (state.question === 2) {
+          state.complete = true;
+          render('h1', false);
+          window.scrollTo(0, 0);
+          speak(`${text().badge}. ${text().congrats}`);
+        } else {
+          state.question += 1;
+          state.tried = new Set();
+          state.passed = false;
+          render('#question', false);
+          window.scrollTo(0, 0);
+          speak(quiz()[0]);
+        }
+        break;
+      case 'restart': restart(); break;
+    }
+  }
+});
+
+station.addEventListener('change', event => {
+  if (event.target.matches('[data-survey]')) state.survey[Number(event.target.dataset.survey)] = Number(event.target.value);
+});
+
+station.addEventListener('dragstart', event => {
+  const item = event.target.closest('[data-item]');
+  if (!item || item.disabled) return;
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('application/x-deep-blue', item.dataset.item);
+  state.selected = Number(item.dataset.item);
+  updateSelection();
+});
+
+station.addEventListener('dragover', event => {
+  const bin = event.target.closest('[data-bin]');
+  if (!bin || !event.dataTransfer.types.includes('application/x-deep-blue')) return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+  bin.classList.add('drop-target');
+});
+
+station.addEventListener('dragleave', event => {
+  const bin = event.target.closest('[data-bin]');
+  if (bin && !bin.contains(event.relatedTarget)) bin.classList.remove('drop-target');
+});
+
+station.addEventListener('dragend', () => station.querySelectorAll('.drop-target').forEach(bin => bin.classList.remove('drop-target')));
+
+station.addEventListener('drop', event => {
+  const bin = event.target.closest('[data-bin]');
+  if (!bin || !event.dataTransfer.types.includes('application/x-deep-blue')) return;
+  event.preventDefault();
+  bin.classList.remove('drop-target');
+  sort(Number(event.dataTransfer.getData('application/x-deep-blue')), Number(bin.dataset.bin));
+});
+
+soundButton.addEventListener('click', () => {
+  state.sound = !state.sound;
+  if (!state.sound) window.speechSynthesis?.cancel();
+  const player = station.querySelector('.briefing-video');
+  if (player) player.muted = !state.sound;
+  updateChrome();
+  syncMedia();
+  if (state.sound && state.step === 1) speak(text().roleIntro);
+  if (state.sound && state.step === 5) speak(state.complete ? text().congrats : quiz()[0]);
+});
+
+resetButton.addEventListener('click', () => {
+  const words = text();
+  const dialog = document.createElement('dialog');
+  dialog.setAttribute('aria-labelledby', 'reset-heading');
+  dialog.innerHTML = `<h2 id="reset-heading">${words.resetTitle}</h2><p>${words.resetNote}</p><form class="stage-actions" method="dialog"><button class="button secondary" value="cancel" autofocus>${words.cancel}</button><button class="button primary" value="reset">${words.resetConfirm}</button></form>`;
+  dialog.addEventListener('close', () => {
+    dialog.remove();
+    if (dialog.returnValue === 'reset') restart();
+  }, { once: true });
+  document.body.append(dialog);
+  dialog.showModal();
+});
+
+motion.addEventListener('change', event => {
+  state.motionPaused = event.matches;
+  syncMedia();
+});
+
+render();
+</script></body></html>
